@@ -1,0 +1,32 @@
+name: CI Pipeline
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            # Шаг 1: Получение кода
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            # Шаг 2: Установка Node.js
+            - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "16"
+
+            # Шаг 3: Установка зависимостей
+            - name: Install dependencies
+              run: npm install
+
+            # Шаг 5: Сборка приложения
+            - name: Build
+              run: npm run build
