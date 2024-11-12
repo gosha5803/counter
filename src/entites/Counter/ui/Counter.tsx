@@ -1,4 +1,3 @@
-import { Button, Space, Typography } from "antd";
 import { useActions, useTypedSelector } from "../../../shared";
 
 export const Counter = () => {
@@ -10,11 +9,11 @@ export const Counter = () => {
 
     return (
         <>
-            <Typography.Title>{counter}</Typography.Title>
-            <Space>
-                <Button onClick={onIncrement}>increment</Button>
-                <Button onClick={onDecrement}>decrement</Button>
-            </Space>
+            <div>{counter}</div>
+            <div style={{ display: "flex" }}>
+                <button onClick={onIncrement}>increment</button>
+                <button onClick={onDecrement}>decrement</button>
+            </div>
         </>
     );
 };
