@@ -9,45 +9,38 @@ on:
             - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+    # build:
+    #     runs-on: ubuntu-latest
 
-        steps:
-            # Шаг 1: Получение кода
-            - name: Checkout code
-              uses: actions/checkout@v2
+    #     steps:
+    #         # Шаг 1: Получение кода
+    #         - name: Checkout code
+    #           uses: actions/checkout@v2
 
-            # Шаг 2: Установка Node.js
-            - name: Set up Node.js
-              uses: actions/setup-node@v2
-              with:
-                  node-version: "16"
+    #         # Шаг 2: Установка Node.js
+    #         - name: Set up Node.js
+    #           uses: actions/setup-node@v2
+    #           with:
+    #               node-version: "16"
 
-            # Шаг 3: Установка зависимостей
-            - name: Install dependencies
-              run: npm install
+    #         # Шаг 3: Установка зависимостей
+    #         - name: Install dependencies
+    #           run: npm install
 
-            # Шаг 5: Сборка приложения
-            - name: Build
-              run: npm run build
+    #         # Шаг 5: Сборка приложения
+    #         - name: Build
+    #           run: npm run build
             
     deploy: 
         runs-on: ubuntu-latest
 
         steps:
-            # Шаг 1: Получение кода
-            - name: Connect to Host and Pull Updates
-              env:
-                HOST: ${{ secrets.HOST_IP2 }}
-                USERNAME: ${{ secrets.HOST_LOGIN }}
-                PASSWORD: ${{ secrets.HOST_PASSWORD }}
-              run: |
-                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "cd /var/www/apps/counter && git pull"
-
-            - name: Install Dependencies
-              run: |
-                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "npm install"
-
-            - name: Rebuild Project
-              run: |
-                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "npm run build"
+            name: Setup SSH
+            env:
+              SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+            run: |
+              mkdir -p ~/.ssh
+              echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+              chmod 600 ~/.ssh/id_rsa
+            name: Run SSH command
+            run: ssh -o StrictHostKeyChecking=no username@hostname "your_command"
