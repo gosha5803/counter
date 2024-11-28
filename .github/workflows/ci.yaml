@@ -35,12 +35,14 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            name: Setup SSH
-            env:
-              SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-            run: |
-              mkdir -p ~/.ssh
-              echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-              chmod 600 ~/.ssh/id_rsa
-            name: Run SSH command
-            run: ssh -o StrictHostKeyChecking=no username@hostname "your_command"
+            - name: Setup SSH
+              env:
+                HOST: ${{ secrets.HOST_IP2 }}
+                USERNAME: ${{ secrets.HOST_LOGIN }}
+                SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+              run: |
+                mkdir -p ~/.ssh
+                echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+                chmod 600 ~/.ssh/id_rsa
+            - name: Run SSH command
+              run: ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "cd /var/www/apps/counter && git pull"
