@@ -30,3 +30,6 @@ jobs:
             # Шаг 5: Сборка приложения
             - name: Build
               run: npm run build
+            
+            - name: Use secret
+              run: echo "The secret is ${{secrets.HOST_IP}}"
