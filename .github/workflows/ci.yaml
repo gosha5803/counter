@@ -46,8 +46,8 @@ jobs:
 
             - name: Install Dependencies
               run: |
-                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "cd /var/www/apps/counter && npm install"
+                npm install"
 
             - name: Rebuild Project
               run: |
-                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "cd /var/www/apps/counter && npm run build"
+                npm run build"
