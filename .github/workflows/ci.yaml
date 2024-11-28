@@ -46,8 +46,8 @@ jobs:
 
             - name: Install Dependencies
               run: |
-                "npm install"
+                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "npm install"
 
             - name: Rebuild Project
               run: |
-                "npm run build"
+                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "npm run build"
