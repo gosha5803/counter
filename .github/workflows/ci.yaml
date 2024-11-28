@@ -35,14 +35,19 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Setup SSH
+            # Шаг 1: Получение кода
+            - name: Connect to Host and Pull Updates
               env:
                 HOST: ${{ secrets.HOST_IP2 }}
                 USERNAME: ${{ secrets.HOST_LOGIN }}
-                SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                PASSWORD: ${{ secrets.HOST_PASSWORD }}
               run: |
-                mkdir -p ~/.ssh
-                echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-                chmod 600 ~/.ssh/id_rsa
-            - name: Run SSH command
-              run: ssh $USERNAME@$HOST "cd /var/www/apps/counter && git pull"
+                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "cd /var/www/apps/counter && git pull"
+
+            - name: Install Dependencies
+              run: |
+                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "npm install"
+
+            - name: Rebuild Project
+              run: |
+                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "npm run build"
