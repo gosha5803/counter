@@ -38,13 +38,11 @@ jobs:
             # Шаг 1: Получение кода
             - name: Connect to Host and Pull Updates
               env:
-                HOST: ${{ secrets.HOST_IP }}
+                HOST: ${{ secrets.HOST_IP2 }}
                 USERNAME: ${{ secrets.HOST_LOGIN }}
                 PASSWORD: ${{ secrets.HOST_PASSWORD }}
               run: |
-                echo "Host: ${{ secrets.HOST }}"
-                echo "Username: ${{ secrets.SSH_USERNAME }}"
-                echo "Port: ${{ secrets.SSH_PORT }}"
+                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "cd /var/www/apps/counter && git pull"
 
             - name: Install Dependencies
               run: |
