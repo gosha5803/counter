@@ -42,7 +42,9 @@ jobs:
                 USERNAME: ${{ secrets.HOST_LOGIN }}
                 PASSWORD: ${{ secrets.HOST_PASSWORD }}
               run: |
-                sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "cd /var/www/apps/counter && git pull"
+                echo "Host: ${{ secrets.HOST }}"
+                echo "Username: ${{ secrets.SSH_USERNAME }}"
+                echo "Port: ${{ secrets.SSH_PORT }}"
 
             - name: Install Dependencies
               run: |
