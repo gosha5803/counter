@@ -46,8 +46,8 @@ jobs:
 
             - name: Install Dependencies
               run: |
-                npm install"
+                "npm install"
 
             - name: Rebuild Project
               run: |
-                npm run build"
+                "npm run build"
