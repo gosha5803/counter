@@ -9,7 +9,7 @@ export const Counter = () => {
 
     return (
         <>
-            <div>{counter}</div>
+            <div>Counter: {counter}</div>
             <div style={{ display: "flex" }}>
                 <button onClick={onIncrement}>+</button>
                 <button onClick={onDecrement}>-</button>
